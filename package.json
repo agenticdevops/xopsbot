@@ -4,9 +4,13 @@
   "description": "DevOps-focused distribution of OpenClaw",
   "type": "module",
   "scripts": {
-    "wizard": "bun run xopsbot/wizard/index.ts"
+    "wizard": "bun run xopsbot/wizard/index.ts",
+    "setup": "bun run xopsbot/wizard/index.ts"
   },
   "dependencies": {
+    "@clack/prompts": "^0.7",
+    "json5": "^2.2",
+    "picocolors": "^1.0",
     "zod": "^3.24.0"
   },
   "devDependencies": {
