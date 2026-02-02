@@ -1,0 +1,26 @@
+{
+  "name": "dev",
+  "description": "Development environment - Full access, no approval required",
+
+  "environment": {
+    "KUBECONFIG": "~/.kube/dev-config",
+    "AWS_PROFILE": "dev",
+    "AWS_REGION": "us-west-2",
+    "DOCKER_HOST": ""
+  },
+
+  "safety": {
+    "mode": "full",
+    "audit_logging": false
+  },
+
+  "active_workspaces": [
+    "k8s-agent",
+    "rca-agent",
+    "incident-agent",
+    "finops-agent",
+    "platform-agent"
+  ],
+
+  "bindings": []
+}
