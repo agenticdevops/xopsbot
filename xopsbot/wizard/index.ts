@@ -1,11 +1,13 @@
 import * as p from '@clack/prompts';
 import pc from 'picocolors';
+import { printBanner } from './banner';
 import { runWelcome } from './steps/welcome';
 import { selectWorkspaces } from './steps/workspaces';
 import { selectProfile } from './steps/profile';
 import { generateConfig } from './steps/generate';
 
 export async function runWizard() {
+  printBanner();
   p.intro(pc.cyan('xops.bot setup wizard'));
 
   // Step 1: Welcome
