@@ -56,8 +56,8 @@ export async function connectProvider(): Promise<ProviderChoice | symbol> {
     p.log.success(pc.green(`${envKey} detected in environment`));
   } else {
     p.note(
-      `Set your API key:\n  export ${envKey}="your-key-here"\n\nOr run:\n  openclaw login`,
-      'API Key Required',
+      `Authenticate with your ${PROVIDER_OPTIONS.find((o) => o.value === providerStr)?.label ?? providerStr} subscription:\n  openclaw login\n\nOr set an API key directly:\n  export ${envKey}="your-key-here"`,
+      'Authentication',
     );
   }
 
