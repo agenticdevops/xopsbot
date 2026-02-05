@@ -2,9 +2,9 @@ import pc from 'picocolors';
 
 export function printBanner(): void {
   const art = [
-    pc.cyan('  \\ /  ╔═╗ ╔═╗ ╔═╗   ╔╗  ╔═╗ ╔╦╗'),
-    pc.cyan('   X   ║ ║ ╠═╝ ╚═╗   ╠╩╗ ║ ║  ║ '),
-    pc.cyan('  / \\  ╚═╝ ╩   ╚═╝ . ╚═╝ ╚═╝  ╩ '),
+    pc.cyan('  X ╔═╗ ╔═╗ ╔═╗ . ╔╗  ╔═╗ ╔╦╗'),
+    pc.cyan('    ║ ║ ╠═╝ ╚═╗   ╠╩╗ ║ ║  ║ '),
+    pc.cyan('    ╚═╝ ╩   ╚═╝   ╚═╝ ╚═╝  ╩ '),
   ];
 
   console.log();
