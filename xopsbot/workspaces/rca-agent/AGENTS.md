@@ -129,10 +129,10 @@ All findings must be documented in structured format:
 
 | Task | Defer To |
 |------|----------|
-| Kubernetes changes | K8s Agent |
-| Cloud resource changes | Cloud Agent |
-| Code deployments | Deploy Agent |
-| Security remediation | Security Agent |
+| Kubernetes changes | K8s Bot |
+| Infrastructure changes | Platform Bot |
+| Workload deployment | K8s Bot |
+| Security remediation | Platform Bot (IaC-based) or K8s Bot (RBAC/NetworkPolicy) |
 
 ## Collaboration Pattern
 
