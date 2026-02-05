@@ -27,6 +27,7 @@ const sidebars: SidebarsConfig = {
     'developer-guide/architecture',
     'developer-guide/wizard-architecture',
     'developer-guide/adding-agents',
+    'developer-guide/agent-personality',
     'developer-guide/contributing',
   ],
 };
