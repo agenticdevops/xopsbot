@@ -16,7 +16,7 @@ xops.bot is a DevOps-focused distribution of [OpenClaw](https://github.com/openc
 ## Quick Start
 
 1. **[Install xops.bot](/user-guide/installation)** -- prerequisites and setup
-2. **[Run the wizard](/user-guide/wizard-walkthrough)** -- configure your agents and profiles
+2. **[Run the wizard](/user-guide/setup-wizard)** -- configure your agents, channels, tools, and safety mode
 3. **[Explore the agents](/user-guide/agents/k8s-bot)** -- learn what each Bot can do
 
 ## Agents

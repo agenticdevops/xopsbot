@@ -26,7 +26,7 @@ xops.bot layers DevOps capabilities on top of OpenClaw:
 
 - **SOUL.md** -- DevOps personality, security constraints, communication style
 - **Branding** -- ASCII art banner, cyan/blue theme, agent identity system
-- **Setup wizard** -- interactive onboarding with workspace and profile selection
+- **Setup wizard** -- interactive onboarding with workspace, channel, tool, safety, and provider selection
 - **Safety configuration** -- Safe/Standard/Full modes with risk classifications
 - **Agent workspaces** -- 5 specialized DevOps agents
 - **Profiles** -- Environment-specific settings (dev/stage/prod)
@@ -80,34 +80,45 @@ xopsbot/
     prod/profile.json         # Production (standard mode, 3 agents)
   wizard/                     # Setup wizard
     banner.ts                 # ASCII art banner (picocolors)
-    index.ts                  # Wizard entry point
+    index.ts                  # Wizard orchestrator (5-step flow)
+    types.ts                  # WizardResults, ProviderChoice types
+    utils/
+      first-run.ts            # First-run detection (isFirstRun)
     steps/
-      welcome.ts              # Welcome screen
-      workspaces.ts           # Workspace selection (multiselect)
-      profile.ts              # Profile selection
-      generate.ts             # Config generation
+      welcome.ts              # Welcome note (describes 5 selections)
+      workspaces.ts           # Workspace selection (multiselect, 5 agents)
+      channels.ts             # Channel selection (multiselect, optional)
+      tools.ts                # DevOps tool selection (multiselect, kubectl default)
+      safety.ts               # Safety mode selection (safe/standard/full)
+      provider.ts             # LLM provider selection with env var detection
+      generate.ts             # Config generation + summary display
     templates/
-      openclaw.json5.ts       # OpenClaw config template
+      openclaw.json5.ts       # OpenClaw config template (JSON5)
 ```
 
 ## Configuration Flow
 
 ```
-User runs wizard
+User runs wizard (or auto-launches on first run)
   -> Banner displayed
-  -> Welcome screen
-  -> Select workspaces (multiselect)
-  -> Select profile (single select)
+  -> Welcome note (describes 5 selections)
+  -> Select workspaces (multiselect, 5 agents)
+  -> Select channels (multiselect, optional)
+  -> Select tools (multiselect, kubectl default)
+  -> Select safety mode (safe/standard/full)
+  -> Select LLM provider (anthropic/openai/google)
   -> Generate config
     -> Copy workspace templates to ~/.xopsbot/workspaces/
-    -> Copy profile to ~/.xopsbot/profiles/
-    -> Generate ~/.openclaw/openclaw.json
+    -> Generate ~/.openclaw/openclaw.json with channels, tools, provider
+  -> Summary displayed with next steps
   -> User runs `openclaw`
     -> OpenClaw reads config
     -> Loads agent workspaces
     -> Applies safety constraints
     -> Agents ready for conversation
 ```
+
+See the [Wizard Architecture](/developer-guide/wizard-architecture) page for implementation details.
 
 ## Key Design Decisions
 

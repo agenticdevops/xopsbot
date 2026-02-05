@@ -124,4 +124,4 @@ This routes messages from `#ops-alerts` on Slack directly to Incident Bot.
 - **Testing workflows?** Use **Staging** to practice with approval gates.
 - **Running in production?** Use **Production** for the safest configuration.
 
-The setup wizard helps you choose the right profile. See the [Wizard Walkthrough](/user-guide/wizard-walkthrough) for details.
+The setup wizard helps you choose the right safety mode. See the [Setup Wizard](/user-guide/setup-wizard) for details.

@@ -7,7 +7,7 @@ const sidebars: SidebarsConfig = {
       label: 'Getting Started',
       items: [
         'user-guide/installation',
-        'user-guide/wizard-walkthrough',
+        'user-guide/setup-wizard',
       ],
     },
     {
@@ -25,6 +25,7 @@ const sidebars: SidebarsConfig = {
   ],
   devGuide: [
     'developer-guide/architecture',
+    'developer-guide/wizard-architecture',
     'developer-guide/adding-agents',
     'developer-guide/contributing',
   ],

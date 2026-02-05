@@ -45,7 +45,7 @@ bun install
 bun run setup
 ```
 
-The wizard walks you through selecting agent workspaces and a safety profile. See the [Wizard Walkthrough](/user-guide/wizard-walkthrough) for a detailed guide.
+The wizard walks you through selecting agent workspaces, channels, tools, safety mode, and LLM provider. See the [Setup Wizard](/user-guide/setup-wizard) for a detailed guide.
 
 ### 4. Start OpenClaw
 
@@ -100,6 +100,6 @@ xopsbot/
 
 ## Next Steps
 
-- **[Run the wizard](/user-guide/wizard-walkthrough)** to configure your environment
+- **[Run the setup wizard](/user-guide/setup-wizard)** to configure your environment
 - **[Learn about agents](/user-guide/agents/k8s-bot)** to understand what each Bot does
 - **[Understand profiles](/user-guide/profiles)** to choose the right safety level
