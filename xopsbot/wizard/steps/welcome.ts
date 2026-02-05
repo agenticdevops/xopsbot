@@ -2,15 +2,17 @@ import * as p from '@clack/prompts';
 
 export async function runWelcome() {
   p.note(
-    `This wizard will help you:
-1. Select which agent workspaces to enable
-2. Choose a safety profile (dev/stage/prod)
-3. Generate your OpenClaw configuration
+    `This wizard will walk you through 5 quick selections:
 
-Your configuration will be saved to:
+  1. Select agent workspaces to enable
+  2. Choose communication channels
+  3. Pick your DevOps tools
+  4. Set a safety mode
+  5. Connect your LLM provider
+
+Then it will generate your configuration at:
   ~/.openclaw/openclaw.json
-  ~/.xopsbot/workspaces/
-  ~/.xopsbot/profiles/`,
+  ~/.xopsbot/workspaces/`,
     'Welcome'
   );
 }
