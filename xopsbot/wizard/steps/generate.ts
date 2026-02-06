@@ -3,11 +3,22 @@ import pc from 'picocolors';
 import * as fs from 'fs';
 import * as path from 'path';
 import { generateOpenClawConfig } from '../templates/openclaw.json5';
+import { generateExecApprovals } from '../../safety';
 import type { WizardResults } from '../types';
+import type { SafetyMode } from '../../schemas/profile.schema';
 
 const XOPSBOT_HOME = path.join(process.env.HOME || '~', '.xopsbot');
 const OPENCLAW_HOME = path.join(process.env.HOME || '~', '.openclaw');
 const TEMPLATE_DIR = path.join(__dirname, '../../');
+
+/**
+ * Human-readable explanations of each safety mode.
+ */
+const safetyExplanation: Record<string, string> = {
+  safe: 'Read-only. All mutations blocked.',
+  standard: 'Mutations require your approval.',
+  full: 'All operations run without prompts.',
+};
 
 export async function generateConfig(results: WizardResults) {
   const spinner = p.spinner();
@@ -36,6 +47,20 @@ export async function generateConfig(results: WizardResults) {
       'utf-8'
     );
 
+    // 4b. Generate and write exec-approvals.json
+    const agentIds = results.workspaces.map(
+      (ws) => `xops-${ws.replace('-agent', '')}`
+    );
+    const execApprovals = generateExecApprovals(
+      results.safetyMode as SafetyMode,
+      agentIds
+    );
+    fs.writeFileSync(
+      path.join(OPENCLAW_HOME, 'exec-approvals.json'),
+      JSON.stringify(execApprovals, null, 2),
+      { mode: 0o600 } // Restrictive permissions -- security-sensitive file
+    );
+
     spinner.stop('Configuration generated!');
 
     // 5. Build summary
@@ -48,11 +73,12 @@ export async function generateConfig(results: WizardResults) {
       `Workspaces: ${pc.cyan(results.workspaces.join(', '))}`,
       `Channels:   ${pc.cyan(channelList)}`,
       `Tools:      ${pc.cyan(results.tools.join(', '))}`,
-      `Safety:     ${pc.cyan(results.safetyMode)}`,
+      `Safety:     ${pc.cyan(results.safetyMode)} - ${safetyExplanation[results.safetyMode]}`,
       `Provider:   ${pc.cyan(results.provider.model)}`,
       '',
       'Files created:',
       `  ${pc.dim('~/.openclaw/openclaw.json')}`,
+      `  ${pc.dim('~/.openclaw/exec-approvals.json')}`,
       `  ${pc.dim('~/.xopsbot/workspaces/*')}`,
     ];
 
