@@ -69,7 +69,20 @@ export async function generateConfig(results: WizardResults) {
         ? results.channels.join(', ')
         : 'none (TUI only)';
 
+    // Save active-preset marker if a preset was selected
+    if (results.preset) {
+      fs.writeFileSync(
+        path.join(XOPSBOT_HOME, 'active-preset'),
+        results.preset,
+        'utf-8'
+      );
+    }
+
     const summaryLines = [
+      // If a preset was selected, show it first
+      ...(results.preset
+        ? [`Preset:     ${pc.cyan(results.preset)}`]
+        : []),
       `Workspaces: ${pc.cyan(results.workspaces.join(', '))}`,
       `Channels:   ${pc.cyan(channelList)}`,
       `Tools:      ${pc.cyan(results.tools.join(', '))}`,
@@ -80,6 +93,9 @@ export async function generateConfig(results: WizardResults) {
       `  ${pc.dim('~/.openclaw/openclaw.json')}`,
       `  ${pc.dim('~/.openclaw/exec-approvals.json')}`,
       `  ${pc.dim('~/.xopsbot/workspaces/*')}`,
+      ...(results.preset
+        ? [`  ${pc.dim('~/.xopsbot/active-preset')}`]
+        : []),
     ];
 
     // Channel token setup instructions
