@@ -1,4 +1,13 @@
-// Schema types and validators
+/**
+ * Plugin system barrel export.
+ *
+ * Provides schemas, definitions, collections, registry operations,
+ * and dependency resolution for the xopsbot plugin system.
+ *
+ * @module plugins
+ */
+
+// --- Schema types and validators ---
 export {
   PluginManifestSchema,
   PluginRegistryEntrySchema,
@@ -11,13 +20,30 @@ export type {
   PluginRegistryFile,
 } from './schema';
 
-// Plugin definitions
+// --- Plugin definitions ---
 export { kubernetesPlugin } from './definitions/kubernetes';
 export { dockerPlugin } from './definitions/docker';
 export { awsPlugin } from './definitions/aws';
 export { terraformPlugin } from './definitions/terraform';
 export { observabilityPlugin } from './definitions/observability';
 
+// --- Registry operations ---
+export {
+  loadRegistry,
+  saveRegistry,
+  installPlugin,
+  removePlugin,
+  enablePlugin,
+  disablePlugin,
+  listPlugins,
+  isInstalled,
+  isEnabled,
+} from './registry';
+
+// --- Dependency resolution ---
+export { resolveDependencies } from './resolve-dependencies';
+
+// --- Collections ---
 import { kubernetesPlugin } from './definitions/kubernetes';
 import { dockerPlugin } from './definitions/docker';
 import { awsPlugin } from './definitions/aws';
