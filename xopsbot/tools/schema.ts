@@ -52,7 +52,7 @@ export const ToolDefinitionSchema = z.object({
   description: z.string(),
   /** Risk level for commands not explicitly classified */
   defaultRisk: RiskLevelSchema,
-  /** Glob patterns for exec-approvals matching (e.g., ["*/kubectl"]) */
+  /** Glob patterns for exec-approvals matching tool binaries */
   binaryPatterns: z.array(z.string()),
   /** Individual command definitions with risk annotations */
   commands: z.array(CommandDefinitionSchema),
