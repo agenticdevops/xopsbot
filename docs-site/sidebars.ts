@@ -6,8 +6,10 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Getting Started',
       items: [
+        'user-guide/quickstart',
         'user-guide/installation',
         'user-guide/setup-wizard',
+        'user-guide/concepts',
       ],
     },
     {
@@ -27,6 +29,9 @@ const sidebars: SidebarsConfig = {
     'user-guide/tool-safety',
     'user-guide/plugins',
     'user-guide/presets',
+    'user-guide/workflows',
+    'user-guide/cli-reference',
+    'user-guide/troubleshooting',
   ],
   devGuide: [
     'developer-guide/architecture',

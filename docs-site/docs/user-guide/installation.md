@@ -79,7 +79,7 @@ After installation, your project looks like this:
 
 ```
 xopsbot/
-  schemas/           # Zod schemas (profile, safety)
+  schemas/           # Zod schemas (profile, safety, presets)
   safety/            # Risk classifications for tools
   workspaces/        # Agent workspace templates
     k8s-agent/       # K8s Bot workspace
@@ -91,6 +91,10 @@ xopsbot/
     dev/             # Development (full access)
     stage/           # Staging (approval required)
     prod/            # Production (restricted)
+  skills/            # Shared DevOps skill files
+  plugins/           # Plugin manifests and registry
+  presets/           # Role-based preset definitions
+  cli/               # CLI commands (plugin, preset, safety-switch)
   wizard/            # Setup wizard
     banner.ts        # ASCII art banner
     index.ts         # Wizard entry point

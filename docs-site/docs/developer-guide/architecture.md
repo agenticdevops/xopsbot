@@ -26,10 +26,13 @@ xops.bot layers DevOps capabilities on top of OpenClaw:
 
 - **SOUL.md** -- DevOps personality, security constraints, communication style
 - **Branding** -- ASCII art banner, cyan/blue theme, agent identity system
-- **Setup wizard** -- interactive onboarding with workspace, channel, tool, safety, and provider selection
+- **Setup wizard** -- interactive onboarding with preset, workspace, channel, tool, safety, and provider selection
 - **Safety configuration** -- Safe/Standard/Full modes with risk classifications
 - **Agent workspaces** -- 5 specialized DevOps agents
 - **Profiles** -- Environment-specific settings (dev/stage/prod)
+- **Plugins** -- 5 installable skill + tool bundles (kubernetes, docker, aws, terraform, observability)
+- **Presets** -- 3 role-based configurations (DevOps Starter, SRE, Platform Engineer)
+- **CLI tools** -- plugin management, preset management, runtime safety switching
 
 ## Four-File Workspace Pattern
 
@@ -78,17 +81,36 @@ xopsbot/
     dev/profile.json          # Development (full mode, all agents)
     stage/profile.json        # Staging (standard mode, 4 agents)
     prod/profile.json         # Production (standard mode, 3 agents)
+  skills/                     # Shared skill files (10 skills)
+  plugins/                    # Plugin manifests and registry
+    manifests/                # Plugin definition files
+    registry.ts               # Plugin registry management
+    resolve-dependencies.ts   # Topological dependency resolution
+    index.ts                  # Plugin barrel exports
+  presets/                    # Preset definitions
+    schema.ts                 # PresetDefinition Zod schema
+    definitions/              # Preset definition files
+      devops.ts               # DevOps Starter preset
+      sre.ts                  # SRE preset
+      platform-engineer.ts    # Platform Engineer preset
+    index.ts                  # Preset barrel exports
+  cli/                        # CLI commands
+    plugin.ts                 # Plugin install/remove/list/enable/disable
+    preset.ts                 # Preset list/show/apply
+    safety-switch.ts          # Runtime safety mode switching
+    index.ts                  # CLI barrel exports
   wizard/                     # Setup wizard
     banner.ts                 # ASCII art banner (picocolors)
-    index.ts                  # Wizard orchestrator (5-step flow)
+    index.ts                  # Wizard orchestrator (6-step flow)
     types.ts                  # WizardResults, ProviderChoice types
     utils/
       first-run.ts            # First-run detection (isFirstRun)
     steps/
-      welcome.ts              # Welcome note (describes 5 selections)
+      welcome.ts              # Welcome note (describes 6 selections)
+      preset.ts               # Preset selection (DevOps/SRE/Platform/Custom)
       workspaces.ts           # Workspace selection (multiselect, 5 agents)
       channels.ts             # Channel selection (multiselect, optional)
-      tools.ts                # DevOps tool selection (multiselect, kubectl default)
+      tools.ts                # DevOps tool selection (multiselect, 8 tools)
       safety.ts               # Safety mode selection (safe/standard/full)
       provider.ts             # LLM provider selection with env var detection
       generate.ts             # Config generation + summary display
@@ -101,15 +123,18 @@ xopsbot/
 ```
 User runs wizard (or auto-launches on first run)
   -> Banner displayed
-  -> Welcome note (describes 5 selections)
-  -> Select workspaces (multiselect, 5 agents)
+  -> Welcome note (describes 6 selections)
+  -> Select role preset (DevOps Starter / SRE / Platform Engineer / Custom)
+  -> Select workspaces (multiselect, 5 agents -- preset pre-populates defaults)
   -> Select channels (multiselect, optional)
-  -> Select tools (multiselect, kubectl default)
-  -> Select safety mode (safe/standard/full)
+  -> Select tools (multiselect, 8 tools -- preset pre-populates defaults)
+  -> Select safety mode (safe/standard/full -- preset pre-populates default)
   -> Select LLM provider (anthropic/openai/google)
+  -> Install preset plugins (if preset selected)
   -> Generate config
     -> Copy workspace templates to ~/.xopsbot/workspaces/
     -> Generate ~/.openclaw/openclaw.json with channels, tools, provider
+    -> Write active-preset marker to ~/.xopsbot/active-preset
   -> Summary displayed with next steps
   -> User runs `openclaw`
     -> OpenClaw reads config

@@ -5,7 +5,7 @@ title: Setup Wizard
 
 # Setup Wizard
 
-The setup wizard configures xops.bot on first run. It walks you through selecting agent workspaces, communication channels, DevOps tools, a safety mode, and your LLM provider, then generates all the configuration files you need.
+The setup wizard configures xops.bot on first run. It walks you through selecting a role preset, agent workspaces, communication channels, DevOps tools, a safety mode, and your LLM provider, then generates all the configuration files you need.
 
 ## First Run
 
@@ -17,12 +17,33 @@ bun run wizard
 
 ## Step 1: Welcome
 
-The wizard opens with the xops.bot ASCII art banner followed by a welcome screen. The welcome note describes the 5 selections you will make and shows where configuration files will be saved:
+The wizard opens with the xops.bot ASCII art banner followed by a welcome screen. The welcome note describes the 6 selections you will make and shows where configuration files will be saved:
 
 - `~/.openclaw/openclaw.json` -- OpenClaw main config
 - `~/.xopsbot/workspaces/` -- Agent workspace files
 
-## Step 2: Agent Workspaces
+## Step 2: Role Preset
+
+Choose a role preset to pre-populate your configuration, or select Custom for full manual control.
+
+| Preset | Tools | Safety |
+|--------|-------|--------|
+| **DevOps Starter** | kubectl, docker, aws | Standard |
+| **SRE** | kubectl, promtool, logcli, jaeger | Standard |
+| **Platform Engineer** | terraform, ansible, aws, kubectl | Standard |
+| **Custom** | (choose manually) | (choose manually) |
+
+Selecting a preset pre-populates workspaces, tools, and safety mode in the following steps. You can modify any of these defaults -- presets suggest, they do not lock.
+
+Selecting **Custom** gives the manual wizard flow where you choose everything yourself.
+
+:::tip
+If you are unsure which preset to choose, start with **DevOps Starter**. It covers the most common tools and you can install additional plugins later.
+:::
+
+For more details on what each preset includes, see [Presets](/user-guide/presets).
+
+## Step 3: Agent Workspaces
 
 Choose which specialized DevOps agents to enable. Use arrow keys to navigate and space to toggle. At least one workspace is required.
 
@@ -40,7 +61,7 @@ By default, `k8s-agent` and `rca-agent` are pre-selected.
 Start with K8s Bot and RCA Bot if you are primarily doing Kubernetes operations. Add more agents as your needs grow.
 :::
 
-## Step 3: Communication Channels
+## Step 4: Communication Channels
 
 Select which messaging platforms xops.bot should connect to. Channels are **optional** -- the terminal UI (TUI) works without any channels enabled.
 
@@ -53,7 +74,7 @@ Select which messaging platforms xops.bot should connect to. Channels are **opti
 
 Channel tokens are **not collected** during the wizard. After the wizard completes, you configure each channel's bot token as an environment variable. The generated config includes placeholder values (e.g., `<TELEGRAM_BOT_TOKEN>`) to remind you which tokens to set.
 
-## Step 4: DevOps Tools
+## Step 5: DevOps Tools
 
 Select the DevOps tools you will use with xops.bot. At least one tool is required. `kubectl` is pre-selected by default.
 
@@ -64,6 +85,9 @@ Select the DevOps tools you will use with xops.bot. At least one tool is require
 | AWS CLI | Amazon Web Services |
 | Terraform | Infrastructure as Code |
 | Ansible | Configuration management |
+| Promtool | Prometheus metrics queries |
+| LogCLI | Loki log analysis |
+| Jaeger | Distributed tracing |
 
 The generated config includes sensible environment variable defaults for each tool:
 
@@ -75,7 +99,7 @@ The generated config includes sensible environment variable defaults for each to
 | Terraform | `TF_WORKSPACE=default` |
 | Ansible | `ANSIBLE_CONFIG=~/.ansible.cfg` |
 
-## Step 5: Safety Mode
+## Step 6: Safety Mode
 
 Select a safety mode that controls how infrastructure mutations are handled.
 
@@ -91,7 +115,7 @@ Standard mode is selected by default.
 Never use Full mode in staging or production environments. Standard mode ensures every mutation is reviewed before execution.
 :::
 
-## Step 6: LLM Provider
+## Step 7: LLM Provider
 
 Select which LLM provider to use for agent conversations.
 
@@ -115,9 +139,11 @@ openclaw login
 
 After all selections are made, the wizard automatically generates your configuration:
 
-1. **Creates directories** -- `~/.xopsbot/workspaces/`, `~/.xopsbot/skills/`, `~/.openclaw/`
-2. **Copies workspace templates** -- Selected agent workspaces are copied to `~/.xopsbot/workspaces/`
-3. **Generates OpenClaw config** -- `~/.openclaw/openclaw.json` is written with:
+1. **Installs preset plugins** -- If you selected a preset, its plugins are installed before config generation
+2. **Creates directories** -- `~/.xopsbot/workspaces/`, `~/.xopsbot/skills/`, `~/.openclaw/`
+3. **Copies workspace templates** -- Selected agent workspaces are copied to `~/.xopsbot/workspaces/`
+4. **Writes active-preset marker** -- If a preset was selected, the preset name is saved to `~/.xopsbot/active-preset`
+5. **Generates OpenClaw config** -- `~/.openclaw/openclaw.json` is written with:
    - Agent list from selected workspaces
    - Channel configuration with placeholder tokens
    - Tool environment variables

@@ -1,1 +1,8 @@
 .planning/
+node_modules/
+.DS_Store
+bun.lock
+docs-site/bun.lock
+docs-site/build/
+docs-site/.docusaurus/
+docs-site/node_modules/
