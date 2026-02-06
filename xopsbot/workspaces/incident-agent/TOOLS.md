@@ -70,6 +70,77 @@ Kubernetes command-line tool
 | `kubectl delete` | CRITICAL | Delete resources by file, stdin, resource, or name |
 | `kubectl drain` | CRITICAL | Drain a node in preparation for maintenance |
 
+## promtool
+
+Prometheus tooling CLI for metrics queries and config validation
+
+### Read-Only Operations (LOW risk)
+
+| Command | Risk | Description |
+|---------|------|-------------|
+| `promtool query instant` | LOW | Execute instant PromQL query at a single point in time |
+| `promtool query range` | LOW | Execute range PromQL query across a time period |
+| `promtool query series` | LOW | Query available time series matching label selectors |
+| `promtool query labels` | LOW | Retrieve label values for a given label name |
+| `promtool query analyze` | LOW | Analyze metric usage patterns (histogram buckets, cardinality) |
+| `promtool check config` | LOW | Validate Prometheus configuration files |
+| `promtool check rules` | LOW | Validate alerting and recording rule files |
+| `promtool check metrics` | LOW | Lint metrics from stdin for consistency and naming |
+| `promtool check web-config` | LOW | Validate web configuration files |
+| `promtool check healthy` | LOW | Check if Prometheus server is healthy |
+| `promtool check ready` | LOW | Check if Prometheus server is ready to serve traffic |
+| `promtool check service-discovery` | LOW | Run service discovery and show relabeling results |
+| `promtool test rules` | LOW | Unit test alerting and recording rules |
+| `promtool debug pprof` | LOW | Retrieve profiling debug information from server |
+| `promtool debug metrics` | LOW | Retrieve metrics debug information from server |
+| `promtool debug all` | LOW | Retrieve all debug information from server |
+| `promtool tsdb analyze` | LOW | Analyze TSDB block churn, cardinality, and compaction |
+| `promtool tsdb list` | LOW | List TSDB blocks |
+| `promtool tsdb dump` | LOW | Dump data samples from TSDB in text format |
+| `promtool tsdb dump-openmetrics` | LOW | Dump data samples in OpenMetrics format |
+
+### Diagnostic Operations (MEDIUM risk)
+
+| Command | Risk | Description |
+|---------|------|-------------|
+| `promtool push metrics` | MEDIUM | Push metrics to Prometheus remote write endpoint |
+
+### Mutations (HIGH risk)
+
+| Command | Risk | Description |
+|---------|------|-------------|
+| `promtool tsdb bench write` | HIGH | Run write benchmarks against TSDB (writes data) |
+| `promtool tsdb create-blocks-from` | HIGH | Create TSDB blocks from external data sources |
+
+## logcli
+
+Grafana Loki command-line tool for log queries via LogQL
+
+### Read-Only Operations (LOW risk)
+
+| Command | Risk | Description |
+|---------|------|-------------|
+| `logcli query` | LOW | Run LogQL query for logs over a time range |
+| `logcli instant-query` | LOW | Run instant LogQL query for a single point in time |
+| `logcli labels` | LOW | Find values for a given label |
+| `logcli series` | LOW | Query log streams matching label selectors |
+| `logcli stats` | LOW | Query index statistics for matching streams (TSDB only) |
+| `logcli volume` | LOW | Query aggregate volumes for matching series (TSDB only) |
+
+## jaeger
+
+Jaeger distributed tracing query via HTTP API (curl-based)
+
+### Read-Only Operations (LOW risk)
+
+| Command | Risk | Description |
+|---------|------|-------------|
+| `jaeger get-services` | LOW | List all services that have reported traces |
+| `jaeger get-operations` | LOW | List operations for a given service |
+| `jaeger find-traces` | LOW | Search traces by service, operation, time range, and duration |
+| `jaeger get-trace` | LOW | Retrieve a single trace by trace ID |
+| `jaeger get-dependencies` | LOW | Retrieve service dependency graph for a time range |
+
 <!-- END GENERATED -->
 
 # Tool Usage Guidelines
