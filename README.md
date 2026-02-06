@@ -161,14 +161,14 @@ docs-site/           Docusaurus documentation (29 pages)
 
 ## Documentation
 
-Full documentation at **[agenticops.github.io/xopsbot](https://agenticops.github.io/xopsbot/)**
+Full documentation at **[docs.xops.bot](https://docs.xops.bot/)**
 
-- [5-Minute Quickstart](https://agenticops.github.io/xopsbot/user-guide/quickstart)
-- [Core Concepts](https://agenticops.github.io/xopsbot/user-guide/concepts)
-- [Example Workflows](https://agenticops.github.io/xopsbot/user-guide/workflows)
-- [Safety Configuration](https://agenticops.github.io/xopsbot/user-guide/safety-configuration)
-- [CLI Reference](https://agenticops.github.io/xopsbot/user-guide/cli-reference)
-- [Troubleshooting](https://agenticops.github.io/xopsbot/user-guide/troubleshooting)
+- [5-Minute Quickstart](https://docs.xops.bot/user-guide/quickstart)
+- [Core Concepts](https://docs.xops.bot/user-guide/concepts)
+- [Example Workflows](https://docs.xops.bot/user-guide/workflows)
+- [Safety Configuration](https://docs.xops.bot/user-guide/safety-configuration)
+- [CLI Reference](https://docs.xops.bot/user-guide/cli-reference)
+- [Troubleshooting](https://docs.xops.bot/user-guide/troubleshooting)
 
 ## How It Works
 

@@ -11,8 +11,8 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://agenticops.github.io',
-  baseUrl: '/xopsbot/',
+  url: 'https://docs.xops.bot',
+  baseUrl: '/',
   trailingSlash: false,
 
   organizationName: 'agenticdevops',

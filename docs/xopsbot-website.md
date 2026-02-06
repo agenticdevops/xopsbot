@@ -41,7 +41,7 @@ Five specialized AI agents for Kubernetes, incident response, root cause analysi
 ### Secondary CTA
 
 **Link:** Read the Docs
-**URL:** https://agenticops.github.io/xopsbot/
+**URL:** https://docs.xops.bot/
 
 ### Terminal Mockup
 
@@ -578,7 +578,7 @@ xops.bot is open source software built on OpenClaw. Fork it, extend it, contribu
 ### Links
 
 - **GitHub:** https://github.com/agenticdevops/xopsbot
-- **Documentation:** https://agenticops.github.io/xopsbot/
+- **Documentation:** https://docs.xops.bot/
 - **OpenClaw:** https://github.com/openclaw
 
 ### Badges
@@ -600,7 +600,7 @@ Stars | Forks | License: MIT | Built on OpenClaw
 
 ### Column 2: Resources
 
-- Documentation (https://agenticops.github.io/xopsbot/)
+- Documentation (https://docs.xops.bot/)
 - Quick Start (#quickstart)
 - CLI Reference (docs link)
 - Troubleshooting (docs link)
