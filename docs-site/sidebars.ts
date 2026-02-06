@@ -25,6 +25,7 @@ const sidebars: SidebarsConfig = {
     'user-guide/safety-configuration',
     'user-guide/skills',
     'user-guide/tool-safety',
+    'user-guide/plugins',
   ],
   devGuide: [
     'developer-guide/architecture',
@@ -34,6 +35,7 @@ const sidebars: SidebarsConfig = {
     'developer-guide/agent-personality',
     'developer-guide/adding-skills',
     'developer-guide/adding-tools',
+    'developer-guide/adding-plugins',
     'developer-guide/contributing',
   ],
 };
