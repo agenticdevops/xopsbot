@@ -84,14 +84,17 @@ describe('generateExecApprovals', () => {
 });
 
 describe('TOOL_BINARIES constant', () => {
-  it('covers all 5 tools from risk-classifications.json', () => {
+  it('covers all 8 tools from tool definitions', () => {
     const tools = Object.keys(TOOL_BINARIES);
     expect(tools).toContain('kubectl');
     expect(tools).toContain('docker');
     expect(tools).toContain('aws');
     expect(tools).toContain('terraform');
     expect(tools).toContain('ansible');
-    expect(tools).toHaveLength(5);
+    expect(tools).toContain('promtool');
+    expect(tools).toContain('logcli');
+    expect(tools).toContain('jaeger');
+    expect(tools).toHaveLength(8);
   });
 
   it('kubectl has single pattern', () => {
