@@ -1,3 +1,73 @@
+# Tools
+
+<!-- GENERATED: Safety annotations from tool definitions -->
+
+## Risk Classification Summary
+
+| Risk Level | Behavior |
+|------------|----------|
+| LOW | Auto-execute without prompting |
+| MEDIUM | Execute with awareness notification |
+| HIGH | Require explicit approval before execution |
+| CRITICAL | Require approval with confirmation prompt |
+
+## aws
+
+AWS Command Line Interface
+
+### Read-Only Operations (LOW risk)
+
+| Command | Risk | Description |
+|---------|------|-------------|
+| `aws describe` | LOW | Describe AWS resources (generic prefix) |
+| `aws get` | LOW | Get AWS resource details (generic prefix) |
+| `aws list` | LOW | List AWS resources (generic prefix) |
+| `aws help` | LOW | Display help information for a service or command |
+| `aws configure list` | LOW | List current AWS CLI configuration values |
+| `aws sts get-caller-identity` | LOW | Return details about the IAM user or role making the call |
+| `aws s3 ls` | LOW | List S3 buckets or objects in a bucket |
+
+### Mutations (HIGH risk)
+
+| Command | Risk | Description |
+|---------|------|-------------|
+| `aws s3 cp` | HIGH | Copy files to/from S3 |
+| `aws s3 sync` | HIGH | Sync directories with S3 |
+| `aws s3 mv` | HIGH | Move files to/from S3 |
+| `aws ec2 run-instances` | HIGH | Launch new EC2 instances |
+| `aws ec2 start-instances` | HIGH | Start stopped EC2 instances |
+| `aws ec2 stop-instances` | HIGH | Stop running EC2 instances |
+| `aws ec2 reboot-instances` | HIGH | Reboot EC2 instances |
+| `aws ec2 modify` | HIGH | Modify EC2 resource attributes |
+| `aws ec2 create` | HIGH | Create EC2 resources (security groups, key pairs, etc.) |
+| `aws iam create` | HIGH | Create IAM resources (users, roles, policies) |
+| `aws iam attach` | HIGH | Attach IAM policies to users, groups, or roles |
+| `aws iam detach` | HIGH | Detach IAM policies from users, groups, or roles |
+| `aws iam put` | HIGH | Put inline IAM policies |
+| `aws rds create` | HIGH | Create RDS database instances or clusters |
+| `aws rds modify` | HIGH | Modify RDS database instances or clusters |
+| `aws rds reboot` | HIGH | Reboot RDS database instances |
+| `aws lambda create` | HIGH | Create Lambda functions |
+| `aws lambda update` | HIGH | Update Lambda function code or configuration |
+| `aws lambda invoke` | HIGH | Invoke a Lambda function |
+| `aws cloudformation create-stack` | HIGH | Create a CloudFormation stack |
+| `aws cloudformation update-stack` | HIGH | Update an existing CloudFormation stack |
+
+### Destructive Operations (CRITICAL risk)
+
+| Command | Risk | Description |
+|---------|------|-------------|
+| `aws s3 rm` | CRITICAL | Delete S3 objects |
+| `aws s3 rb` | CRITICAL | Remove an S3 bucket |
+| `aws ec2 terminate-instances` | CRITICAL | Terminate EC2 instances (permanently destroys them) |
+| `aws ec2 delete` | CRITICAL | Delete EC2 resources (security groups, snapshots, etc.) |
+| `aws iam delete` | CRITICAL | Delete IAM resources (users, roles, policies) |
+| `aws rds delete` | CRITICAL | Delete RDS database instances or clusters |
+| `aws lambda delete` | CRITICAL | Delete Lambda functions |
+| `aws cloudformation delete-stack` | CRITICAL | Delete a CloudFormation stack and its resources |
+
+<!-- END GENERATED -->
+
 # Tool Usage Guidelines
 
 ## AWS Cost Explorer Queries
