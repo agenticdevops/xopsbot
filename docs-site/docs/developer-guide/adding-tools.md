@@ -80,6 +80,7 @@ export const ALL_TOOLS: ToolDefinition[] = [
   awsTool,
   terraformTool,
   ansibleTool,
+  // promtoolTool, logcliTool, jaegerTool also in array (8 tools total)
   myTool,  // <-- add here
 ];
 ```

@@ -6,7 +6,7 @@ description: Available DevOps skills, what they do, how they trigger, and how sa
 
 # DevOps Skills
 
-xops.bot ships with six DevOps skills that give agents domain expertise. Each skill is a structured knowledge file in OpenClaw format -- when you ask the agent something relevant, it automatically loads the right skill to guide its response.
+xops.bot ships with seven DevOps skills that give agents domain expertise. Each skill is a structured knowledge file in OpenClaw format -- when you ask the agent something relevant, it automatically loads the right skill to guide its response.
 
 You do not install or activate skills manually. The agent reads the skill description and decides whether to load it based on what you are asking.
 
@@ -165,6 +165,31 @@ Ansible configuration management operations, playbook execution, and server auto
 
 **Required tools:** `ansible`, `ansible-playbook`
 
+## Observability
+
+### observability-rca
+
+Observability-driven root cause analysis correlating Prometheus metrics, Loki logs, and Jaeger traces.
+
+**Triggers when you ask about:**
+- Investigating service degradation or outages
+- Correlating metrics with logs for a specific time window
+- Tracing request flows through distributed services
+- Performing root cause analysis with observability data
+- Diagnosing latency spikes or error rate increases
+- Following the metrics-to-logs-to-traces investigation workflow
+
+**Key workflows:**
+- Metrics analysis (PromQL queries via promtool for error rates, latency, resource usage)
+- Log investigation (LogQL queries via logcli for error patterns, rate calculations)
+- Trace analysis (Jaeger API queries via curl for request flow, dependency graphs)
+- Cross-signal correlation (aligning findings across metrics, logs, and traces)
+- Troubleshooting decision tree (symptom to signal to query)
+
+**Required tools:** `promtool`, `logcli`, `curl`
+
+**Available to:** RCA Bot
+
 ## Safety Mode Integration
 
 Every skill includes a Safety Mode Behavior section that defines how operations are classified under each safety mode. The classification varies by domain because risk is context-dependent -- a `kubectl get` is very different from a `terraform destroy`.
@@ -189,6 +214,7 @@ Each skill defines its own read-only, mutation, and destructive categories:
 | aws-ops | describe, list, get, ls, cost queries | start, stop, create, invoke | terminate, delete, sync --delete |
 | terraform-workflow | plan, show, state list, validate, output | apply, import, state mv, taint | destroy, state rm, force-unlock |
 | ansible-ops | --check, --diff, --list-hosts, ping, setup | ansible-playbook (without --check) | vault operations, ad-hoc mutations |
+| observability-rca | promtool query, logcli query, curl GET (Jaeger) | promtool push metrics | tsdb bench write, tsdb create-blocks-from |
 
 For full details on safety modes and risk classifications, see [Safety Configuration](./safety-configuration.md).
 
@@ -204,5 +230,6 @@ Each skill exists in two locations: the agent workspace (used by that specific a
 | aws-ops | Platform Bot | `xopsbot/workspaces/platform-agent/skills/aws-ops/` | `xopsbot/skills/aws-ops/` |
 | terraform-workflow | Platform Bot | `xopsbot/workspaces/platform-agent/skills/terraform-workflow/` | `xopsbot/skills/terraform-workflow/` |
 | ansible-ops | Platform Bot | `xopsbot/workspaces/platform-agent/skills/ansible-ops/` | `xopsbot/skills/ansible-ops/` |
+| observability-rca | RCA Bot | `xopsbot/workspaces/rca-agent/skills/observability-rca/` | `xopsbot/skills/observability-rca/` |
 
 Both copies are identical. The workspace copy is loaded by the assigned agent. The shared copy ensures any agent can access any skill when needed.
