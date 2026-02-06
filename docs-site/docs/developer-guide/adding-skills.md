@@ -172,11 +172,11 @@ xopsbot/
 | Incident Response (incident-*, rca-*) | Incident Bot | `xopsbot/workspaces/incident-agent/skills/` |
 | Cost/FinOps (finops-*, cost-*) | FinOps Bot | `xopsbot/workspaces/finops-agent/skills/` |
 
-If a skill spans multiple domains, assign it to the most natural agent and place the shared copy for cross-agent access.
+If a skill spans multiple domains, assign it to the most natural agent and place the shared copy for cross-agent access. Some skills appear in multiple workspaces -- for example, `observability-rca` is in the rca-agent workspace, and `incident-rca` is placed in both the incident-agent and rca-agent workspaces (3 total locations: shared + 2 workspaces). When a skill serves multiple agents, place identical copies in each relevant workspace.
 
 ## Example: Existing Skills
 
-The six skills shipped with xops.bot are good references for format and style:
+The ten skills shipped with xops.bot are good references for format and style:
 
 | Skill | Lines | Sections | Good example of |
 |-------|-------|----------|-----------------|
@@ -186,6 +186,10 @@ The six skills shipped with xops.bot are good references for format and style:
 | `aws-ops` | ~351 | 12 | Multi-service coverage, cost queries |
 | `terraform-workflow` | ~332 | 13 | IaC workflow, CI/CD integration, security scanning |
 | `ansible-ops` | ~344 | 8 | Vault management, progressive deployment |
+| `observability-rca` | ~371 | 8 | Cross-signal correlation, investigation methodology |
+| `incident-analysis` | ~368 | 8 | Investigation patterns, evidence gathering, timeline construction |
+| `incident-response` | ~408 | 8 | Decision trees, mitigation playbooks, recovery verification |
+| `incident-rca` | ~419 | 8 | RCA workflow, hypothesis tracking, blameless postmortem |
 
 Read these in `xopsbot/skills/` before writing a new skill.
 
