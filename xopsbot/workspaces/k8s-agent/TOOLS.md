@@ -1,5 +1,139 @@
 # Tools
 
+<!-- GENERATED: Safety annotations from tool definitions -->
+
+## Risk Classification Summary
+
+| Risk Level | Behavior |
+|------------|----------|
+| LOW | Auto-execute without prompting |
+| MEDIUM | Execute with awareness notification |
+| HIGH | Require explicit approval before execution |
+| CRITICAL | Require approval with confirmation prompt |
+
+## kubectl
+
+Kubernetes command-line tool
+
+### Read-Only Operations (LOW risk)
+
+| Command | Risk | Description |
+|---------|------|-------------|
+| `kubectl get` | LOW | List resources in tabular or JSON/YAML format |
+| `kubectl describe` | LOW | Show detailed information about a resource |
+| `kubectl logs` | LOW | Print container logs |
+| `kubectl top` | LOW | Display resource usage (CPU/memory) |
+| `kubectl api-resources` | LOW | List available API resources on the server |
+| `kubectl api-versions` | LOW | List available API versions on the server |
+| `kubectl cluster-info` | LOW | Display cluster endpoint and service information |
+| `kubectl config` | LOW | View or modify kubeconfig settings |
+| `kubectl version` | LOW | Print client and server version information |
+| `kubectl explain` | LOW | Show documentation for a resource field |
+| `kubectl auth` | LOW | Inspect authorization settings |
+| `kubectl port-forward` | LOW | Forward local ports to a pod |
+| `kubectl proxy` | LOW | Run a proxy to the Kubernetes API server |
+
+### Diagnostic Operations (MEDIUM risk)
+
+| Command | Risk | Description |
+|---------|------|-------------|
+| `kubectl exec` | MEDIUM | Execute a command inside a container |
+| `kubectl cp` | MEDIUM | Copy files between containers and the local filesystem |
+| `kubectl attach` | MEDIUM | Attach to a running container |
+| `kubectl debug` | MEDIUM | Create debugging sessions for troubleshooting workloads |
+
+### Mutations (HIGH risk)
+
+| Command | Risk | Description |
+|---------|------|-------------|
+| `kubectl apply` | HIGH | Apply a configuration to a resource by file or stdin |
+| `kubectl create` | HIGH | Create a resource from a file or stdin |
+| `kubectl patch` | HIGH | Update fields of a resource using a strategic merge patch |
+| `kubectl replace` | HIGH | Replace a resource by file or stdin |
+| `kubectl set` | HIGH | Set specific features on objects (image, resources, etc.) |
+| `kubectl label` | HIGH | Add or update labels on a resource |
+| `kubectl annotate` | HIGH | Add or update annotations on a resource |
+| `kubectl scale` | HIGH | Set a new size for a deployment, replica set, or stateful set |
+| `kubectl autoscale` | HIGH | Auto-scale a deployment, replica set, or stateful set |
+| `kubectl rollout` | HIGH | Manage the rollout of a resource (status, history, undo, restart) |
+| `kubectl expose` | HIGH | Expose a resource as a new Kubernetes service |
+| `kubectl run` | HIGH | Run a particular image on the cluster |
+| `kubectl edit` | HIGH | Edit a resource on the server in an editor |
+| `kubectl cordon` | HIGH | Mark a node as unschedulable |
+| `kubectl uncordon` | HIGH | Mark a node as schedulable |
+| `kubectl taint` | HIGH | Update taints on one or more nodes |
+
+### Destructive Operations (CRITICAL risk)
+
+| Command | Risk | Description |
+|---------|------|-------------|
+| `kubectl delete` | CRITICAL | Delete resources by file, stdin, resource, or name |
+| `kubectl drain` | CRITICAL | Drain a node in preparation for maintenance |
+
+## docker
+
+Docker container runtime
+
+### Read-Only Operations (LOW risk)
+
+| Command | Risk | Description |
+|---------|------|-------------|
+| `docker ps` | LOW | List containers |
+| `docker images` | LOW | List images |
+| `docker inspect` | LOW | Return low-level information on Docker objects |
+| `docker logs` | LOW | Fetch the logs of a container |
+| `docker stats` | LOW | Display a live stream of container resource usage |
+| `docker top` | LOW | Display the running processes of a container |
+| `docker version` | LOW | Show Docker version information |
+| `docker info` | LOW | Display system-wide information |
+| `docker history` | LOW | Show the history of an image |
+| `docker search` | LOW | Search Docker Hub for images |
+| `docker events` | LOW | Get real-time events from the server |
+| `docker diff` | LOW | Inspect changes to files on a container filesystem |
+| `docker port` | LOW | List port mappings for a container |
+
+### Diagnostic Operations (MEDIUM risk)
+
+| Command | Risk | Description |
+|---------|------|-------------|
+| `docker build` | MEDIUM | Build an image from a Dockerfile |
+| `docker pull` | MEDIUM | Download an image from a registry |
+| `docker tag` | MEDIUM | Create a tag that refers to a source image |
+| `docker save` | MEDIUM | Save one or more images to a tar archive |
+| `docker load` | MEDIUM | Load an image from a tar archive |
+| `docker export` | MEDIUM | Export a container filesystem as a tar archive |
+| `docker import` | MEDIUM | Import contents from a tarball to create a filesystem image |
+| `docker commit` | MEDIUM | Create a new image from a container changes |
+| `docker exec` | MEDIUM | Execute a command in a running container |
+| `docker attach` | MEDIUM | Attach local standard I/O streams to a running container |
+| `docker cp` | MEDIUM | Copy files between a container and the local filesystem |
+
+### Mutations (HIGH risk)
+
+| Command | Risk | Description |
+|---------|------|-------------|
+| `docker run` | HIGH | Create and start a new container |
+| `docker start` | HIGH | Start one or more stopped containers |
+| `docker stop` | HIGH | Stop one or more running containers |
+| `docker restart` | HIGH | Restart one or more containers |
+| `docker pause` | HIGH | Pause all processes within one or more containers |
+| `docker unpause` | HIGH | Unpause all processes within one or more containers |
+| `docker kill` | HIGH | Kill one or more running containers |
+| `docker push` | HIGH | Upload an image to a registry |
+
+### Destructive Operations (CRITICAL risk)
+
+| Command | Risk | Description |
+|---------|------|-------------|
+| `docker rm` | CRITICAL | Remove one or more containers |
+| `docker rmi` | CRITICAL | Remove one or more images |
+| `docker prune` | CRITICAL | Remove unused data |
+| `docker system prune` | CRITICAL | Remove all unused containers, networks, images, and optionally volumes |
+| `docker volume rm` | CRITICAL | Remove one or more volumes |
+| `docker network rm` | CRITICAL | Remove one or more networks |
+
+<!-- END GENERATED -->
+
 ## Primary Tool: kubectl
 
 ### Namespace Convention
