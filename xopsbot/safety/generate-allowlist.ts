@@ -1,4 +1,5 @@
 import type { SafetyMode } from '../schemas/profile.schema';
+import { ALL_TOOLS } from '../tools';
 
 /**
  * Entry in the exec-approvals allowlist.
@@ -27,25 +28,12 @@ export interface ExecApprovalsFile {
 
 /**
  * Binary path glob patterns for DevOps tools.
+ * Derived from typed tool definitions (single source of truth).
  * Maps tool names to arrays of glob patterns matching their binary locations.
- * Only includes tools from risk-classifications.json.
  */
-export const TOOL_BINARIES: Record<string, readonly string[]> = {
-  kubectl: ['*/kubectl'],
-  docker: ['*/docker'],
-  aws: ['*/aws'],
-  terraform: ['*/terraform'],
-  ansible: [
-    '*/ansible',
-    '*/ansible-playbook',
-    '*/ansible-galaxy',
-    '*/ansible-vault',
-    '*/ansible-inventory',
-    '*/ansible-doc',
-    '*/ansible-config',
-    '*/ansible-pull',
-  ],
-} as const;
+export const TOOL_BINARIES: Record<string, readonly string[]> = Object.fromEntries(
+  ALL_TOOLS.map((tool) => [tool.name, tool.binaryPatterns])
+);
 
 /**
  * Generates an exec-approvals.json structure for the given safety mode.
