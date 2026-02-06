@@ -1,5 +1,11 @@
 import JSON5 from 'json5';
 import type { WizardResults } from '../types';
+import {
+  safetyModeToExecConfig,
+  SAFE_MODE_TOOL_DENY,
+  getAuditConfig,
+} from '../../safety';
+import type { SafetyMode } from '../../schemas/profile.schema';
 
 /**
  * Channel-specific token environment variable names.
@@ -35,6 +41,9 @@ const TOOL_ENV_VARS: Record<string, Record<string, string>> = {
 export function generateOpenClawConfig(results: WizardResults): string {
   const { workspaces, channels, tools, safetyMode, provider } = results;
 
+  // Cast safetyMode to SafetyMode type for safety module functions
+  const mode = safetyMode as SafetyMode;
+
   // Build agent list from workspaces
   const agentList = workspaces.map((ws, index) => ({
     id: `xops-${ws.replace('-agent', '')}`,
@@ -46,7 +55,7 @@ export function generateOpenClawConfig(results: WizardResults): string {
     workspace: `~/.xopsbot/workspaces/${ws}`,
     tools: {
       profile: 'coding',
-      deny: safetyMode === 'safe' ? ['exec', 'write', 'edit'] : [],
+      deny: mode === 'safe' ? SAFE_MODE_TOOL_DENY : [],
     },
   }));
 
@@ -74,6 +83,9 @@ export function generateOpenClawConfig(results: WizardResults): string {
       defaults: {
         model: { primary: provider.model },
         sandbox: { mode: 'off' },
+        tools: {
+          exec: safetyModeToExecConfig(mode),
+        },
       },
       list: agentList,
     },
@@ -85,6 +97,7 @@ export function generateOpenClawConfig(results: WizardResults): string {
         watch: true,
       },
     },
+    logging: getAuditConfig(mode !== 'full'),
     env,
   };
 
