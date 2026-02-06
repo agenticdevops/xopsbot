@@ -191,6 +191,58 @@
         "ansible-playbook --check": "MEDIUM",
         "ansible-pull": "HIGH"
       }
+    },
+    "promtool": {
+      "description": "Prometheus tooling CLI for metrics queries and config validation",
+      "default_risk": "LOW",
+      "commands": {
+        "query instant": "LOW",
+        "query range": "LOW",
+        "query series": "LOW",
+        "query labels": "LOW",
+        "query analyze": "LOW",
+        "check config": "LOW",
+        "check rules": "LOW",
+        "check metrics": "LOW",
+        "check web-config": "LOW",
+        "check healthy": "LOW",
+        "check ready": "LOW",
+        "check service-discovery": "LOW",
+        "test rules": "LOW",
+        "debug pprof": "LOW",
+        "debug metrics": "LOW",
+        "debug all": "LOW",
+        "tsdb analyze": "LOW",
+        "tsdb list": "LOW",
+        "tsdb dump": "LOW",
+        "tsdb dump-openmetrics": "LOW",
+        "push metrics": "MEDIUM",
+        "tsdb bench write": "HIGH",
+        "tsdb create-blocks-from": "HIGH"
+      }
+    },
+    "logcli": {
+      "description": "Grafana Loki command-line tool for log queries via LogQL",
+      "default_risk": "LOW",
+      "commands": {
+        "query": "LOW",
+        "instant-query": "LOW",
+        "labels": "LOW",
+        "series": "LOW",
+        "stats": "LOW",
+        "volume": "LOW"
+      }
+    },
+    "jaeger": {
+      "description": "Jaeger distributed tracing query via HTTP API (curl-based)",
+      "default_risk": "LOW",
+      "commands": {
+        "get-services": "LOW",
+        "get-operations": "LOW",
+        "find-traces": "LOW",
+        "get-trace": "LOW",
+        "get-dependencies": "LOW"
+      }
     }
   }
 }

@@ -19,18 +19,24 @@ export { dockerTool } from './definitions/docker';
 export { awsTool } from './definitions/aws';
 export { terraformTool } from './definitions/terraform';
 export { ansibleTool } from './definitions/ansible';
+export { promtoolTool } from './definitions/promtool';
+export { logcliTool } from './definitions/logcli';
+export { jaegerTool } from './definitions/jaeger';
 
 import { kubectlTool } from './definitions/kubectl';
 import { dockerTool } from './definitions/docker';
 import { awsTool } from './definitions/aws';
 import { terraformTool } from './definitions/terraform';
 import { ansibleTool } from './definitions/ansible';
+import { promtoolTool } from './definitions/promtool';
+import { logcliTool } from './definitions/logcli';
+import { jaegerTool } from './definitions/jaeger';
 
 import type { ToolDefinition } from './schema';
 
 /**
  * All tool definitions in a single array.
- * Order: kubectl, docker, aws, terraform, ansible.
+ * Order: kubectl, docker, aws, terraform, ansible, promtool, logcli, jaeger.
  */
 export const ALL_TOOLS: ToolDefinition[] = [
   kubectlTool,
@@ -38,6 +44,9 @@ export const ALL_TOOLS: ToolDefinition[] = [
   awsTool,
   terraformTool,
   ansibleTool,
+  promtoolTool,
+  logcliTool,
+  jaegerTool,
 ];
 
 /**
@@ -47,8 +56,8 @@ export const ALL_TOOLS: ToolDefinition[] = [
  */
 export const WORKSPACE_TOOLS: Record<string, string[]> = {
   'k8s-agent': ['kubectl', 'docker'],
-  'rca-agent': ['kubectl'],
-  'incident-agent': ['kubectl'],
+  'rca-agent': ['kubectl', 'promtool', 'logcli', 'jaeger'],
+  'incident-agent': ['kubectl', 'promtool', 'logcli', 'jaeger'],
   'finops-agent': ['aws'],
   'platform-agent': ['terraform', 'ansible', 'aws'],
 };
