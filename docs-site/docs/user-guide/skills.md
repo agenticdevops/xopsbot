@@ -6,7 +6,7 @@ description: Available DevOps skills, what they do, how they trigger, and how sa
 
 # DevOps Skills
 
-xops.bot ships with seven DevOps skills that give agents domain expertise. Each skill is a structured knowledge file in OpenClaw format -- when you ask the agent something relevant, it automatically loads the right skill to guide its response.
+xops.bot ships with ten DevOps skills that give agents domain expertise. Each skill is a structured knowledge file in OpenClaw format -- when you ask the agent something relevant, it automatically loads the right skill to guide its response.
 
 You do not install or activate skills manually. The agent reads the skill description and decides whether to load it based on what you are asking.
 
@@ -190,6 +190,75 @@ Observability-driven root cause analysis correlating Prometheus metrics, Loki lo
 
 **Available to:** RCA Bot
 
+## Incident Response
+
+### incident-analysis
+
+Systematic incident investigation and evidence gathering for infrastructure incidents.
+
+**Triggers when you ask about:**
+- Investigating a production incident
+- Assessing impact and blast radius
+- Checking what changed recently in the cluster
+- Gathering evidence from metrics and logs during an incident
+- Performing initial triage to classify severity
+- Building an incident timeline
+
+**Key workflows:**
+- Initial assessment (pod status, recent events, endpoint health)
+- Evidence collection (deployments, config changes, scaling events)
+- Severity classification checklist
+- Investigation patterns (error spikes, latency, unavailability, cascading failures)
+- Timeline construction from multiple data sources
+
+**Required tools:** `kubectl`
+
+**Available to:** Incident Bot
+
+### incident-response
+
+Incident response and mitigation workflows for active production incidents.
+
+**Triggers when you ask about:**
+- Mitigating an active outage
+- Rolling back a failed deployment during an incident
+- Isolating affected components to reduce blast radius
+- Scaling services to handle load during degradation
+- Coordinating structured incident response
+
+**Key workflows:**
+- Stabilization playbook (rollback, isolate, scale)
+- Mitigation decision trees (rollback vs scale vs isolate)
+- Traffic management (route away from affected components)
+- Recovery verification (metrics returning to baseline)
+- Handoff to RCA with structured format
+
+**Required tools:** `kubectl`
+
+**Available to:** Incident Bot
+
+### incident-rca
+
+Incident root cause analysis combining observability data with structured investigation methodology.
+
+**Triggers when you ask about:**
+- Conducting post-incident RCA
+- Reconstructing incident timelines from multiple data sources
+- Tracking hypotheses during root cause investigation
+- Identifying contributing factors beyond the proximate cause
+- Writing blameless postmortem reports
+- Correlating deployment changes with incident onset
+
+**Key workflows:**
+- RCA workflow (data collection, timeline reconstruction, hypotheses, root cause)
+- Contributing factor analysis (changes, environment, process)
+- Blameless postmortem template
+- Common RCA patterns (deployment regression, resource exhaustion, dependency failure, config drift)
+
+**Required tools:** `kubectl`, `promtool`, `logcli`, `curl`
+
+**Available to:** Incident Bot, RCA Bot
+
 ## Safety Mode Integration
 
 Every skill includes a Safety Mode Behavior section that defines how operations are classified under each safety mode. The classification varies by domain because risk is context-dependent -- a `kubectl get` is very different from a `terraform destroy`.
@@ -215,6 +284,9 @@ Each skill defines its own read-only, mutation, and destructive categories:
 | terraform-workflow | plan, show, state list, validate, output | apply, import, state mv, taint | destroy, state rm, force-unlock |
 | ansible-ops | --check, --diff, --list-hosts, ping, setup | ansible-playbook (without --check) | vault operations, ad-hoc mutations |
 | observability-rca | promtool query, logcli query, curl GET (Jaeger) | promtool push metrics | tsdb bench write, tsdb create-blocks-from |
+| incident-analysis | get, describe, logs, events, top | -- | -- |
+| incident-response | get, describe, rollout status | rollout undo, scale, patch, apply, delete | -- |
+| incident-rca | get, describe, logs, events, promtool query, logcli query | -- | -- |
 
 For full details on safety modes and risk classifications, see [Safety Configuration](./safety-configuration.md).
 
@@ -231,5 +303,8 @@ Each skill exists in two locations: the agent workspace (used by that specific a
 | terraform-workflow | Platform Bot | `xopsbot/workspaces/platform-agent/skills/terraform-workflow/` | `xopsbot/skills/terraform-workflow/` |
 | ansible-ops | Platform Bot | `xopsbot/workspaces/platform-agent/skills/ansible-ops/` | `xopsbot/skills/ansible-ops/` |
 | observability-rca | RCA Bot | `xopsbot/workspaces/rca-agent/skills/observability-rca/` | `xopsbot/skills/observability-rca/` |
+| incident-analysis | Incident Bot | `xopsbot/workspaces/incident-agent/skills/incident-analysis/` | `xopsbot/skills/incident-analysis/` |
+| incident-response | Incident Bot | `xopsbot/workspaces/incident-agent/skills/incident-response/` | `xopsbot/skills/incident-response/` |
+| incident-rca | Incident Bot, RCA Bot | `xopsbot/workspaces/incident-agent/skills/incident-rca/`, `xopsbot/workspaces/rca-agent/skills/incident-rca/` | `xopsbot/skills/incident-rca/` |
 
 Both copies are identical. The workspace copy is loaded by the assigned agent. The shared copy ensures any agent can access any skill when needed.
