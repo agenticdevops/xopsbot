@@ -368,4 +368,6 @@ All investigation commands in this workflow are read-only. Push and TSDB mutatio
 ## Related Skills
 
 - **k8s-debug**: For Kubernetes-specific troubleshooting (pod states, events, resource debugging)
-- **incident-response**: For structured incident handling with severity levels and communication (Phase 9)
+- **incident-analysis**: For systematic incident investigation and evidence gathering before deep RCA
+- **incident-response**: For structured mitigation workflows during active incidents
+- **incident-rca**: For process-level RCA methodology (timeline, hypotheses, blameless postmortem) that wraps this technical investigation
