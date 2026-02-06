@@ -8,11 +8,11 @@ export const AVAILABLE_WORKSPACES = [
   { value: 'platform-agent', label: 'Platform Agent', hint: 'Platform engineering (IaC)' },
 ];
 
-export async function selectWorkspaces(): Promise<string[] | symbol> {
+export async function selectWorkspaces(defaults?: string[]): Promise<string[] | symbol> {
   return p.multiselect({
     message: 'Select agent workspaces to enable',
     options: AVAILABLE_WORKSPACES,
-    initialValues: ['k8s-agent', 'rca-agent'],
+    initialValues: defaults ?? ['k8s-agent', 'rca-agent'],
     required: true,
   });
 }

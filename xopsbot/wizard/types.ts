@@ -17,6 +17,8 @@ export interface ProviderChoice {
  * This is the single typed object passed to config generation.
  */
 export interface WizardResults {
+  /** Selected preset name, or undefined if custom */
+  preset?: string;
   /** Selected agent workspaces (e.g., ['k8s-agent', 'rca-agent']) */
   workspaces: string[];
   /** Selected communication channels (e.g., ['telegram', 'slack']) */

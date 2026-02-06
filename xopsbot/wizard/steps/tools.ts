@@ -10,6 +10,9 @@ export const AVAILABLE_TOOLS = [
   { value: 'aws', label: 'AWS CLI', hint: 'Amazon Web Services' },
   { value: 'terraform', label: 'Terraform', hint: 'Infrastructure as Code' },
   { value: 'ansible', label: 'Ansible', hint: 'Configuration management' },
+  { value: 'promtool', label: 'Promtool', hint: 'Prometheus metrics queries' },
+  { value: 'logcli', label: 'LogCLI', hint: 'Loki log analysis' },
+  { value: 'jaeger', label: 'Jaeger', hint: 'Distributed tracing' },
 ];
 
 /**
@@ -17,11 +20,11 @@ export const AVAILABLE_TOOLS = [
  * Returns selected tool values or a cancel symbol.
  * At least one tool is required.
  */
-export async function selectTools(): Promise<string[] | symbol> {
+export async function selectTools(defaults?: string[]): Promise<string[] | symbol> {
   return p.multiselect({
     message: 'Which DevOps tools will you use?',
     options: AVAILABLE_TOOLS,
-    initialValues: ['kubectl'],
+    initialValues: defaults ?? ['kubectl'],
     required: true,
   });
 }

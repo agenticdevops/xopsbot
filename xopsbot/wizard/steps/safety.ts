@@ -28,10 +28,10 @@ export const SAFETY_OPTIONS = [
  *
  * @returns The selected safety mode string, or a cancel symbol if user cancels.
  */
-export async function selectSafetyMode(): Promise<string | symbol> {
+export async function selectSafetyMode(defaultMode?: string): Promise<string | symbol> {
   return p.select({
     message: 'Select safety mode for infrastructure operations',
     options: SAFETY_OPTIONS,
-    initialValue: 'standard',
+    initialValue: defaultMode ?? 'standard',
   });
 }
