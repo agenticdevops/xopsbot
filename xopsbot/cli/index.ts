@@ -17,3 +17,10 @@ export {
   pluginEnable,
   pluginDisable,
 } from './plugin';
+
+// Preset management
+export {
+  presetList,
+  presetShow,
+  presetApply,
+} from './preset';
