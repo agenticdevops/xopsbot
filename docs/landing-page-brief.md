@@ -184,7 +184,7 @@ Terminal mockup showing the setup wizard output: the ASCII banner, workspace sel
 
 | Label         | URL                                        |
 | ------------- | ------------------------------------------ |
-| GitHub        | https://github.com/opsflow-sh/xopsbot     |
+| GitHub        | https://github.com/agenticdevops/xopsbot     |
 | Documentation | Link to docs site                          |
 | OpenClaw      | https://openclaw.dev                       |
 

@@ -41,7 +41,7 @@ Five specialized AI agents for Kubernetes, incident response, root cause analysi
 ### Secondary CTA
 
 **Link:** Read the Docs
-**URL:** https://opsflow-sh.github.io/xopsbot/
+**URL:** https://agenticops.github.io/xopsbot/
 
 ### Terminal Mockup
 
@@ -433,7 +433,7 @@ From zero to deployed agent in 5 minutes.
 ### Step 1: Install
 
 ```bash
-git clone https://github.com/opsflow-sh/xopsbot.git
+git clone https://github.com/agenticdevops/xopsbot.git
 cd xopsbot && bun install
 ```
 
@@ -577,8 +577,8 @@ xops.bot is open source software built on OpenClaw. Fork it, extend it, contribu
 
 ### Links
 
-- **GitHub:** https://github.com/opsflow-sh/xopsbot
-- **Documentation:** https://opsflow-sh.github.io/xopsbot/
+- **GitHub:** https://github.com/agenticdevops/xopsbot
+- **Documentation:** https://agenticops.github.io/xopsbot/
 - **OpenClaw:** https://github.com/openclaw
 
 ### Badges
@@ -600,14 +600,14 @@ Stars | Forks | License: MIT | Built on OpenClaw
 
 ### Column 2: Resources
 
-- Documentation (https://opsflow-sh.github.io/xopsbot/)
+- Documentation (https://agenticops.github.io/xopsbot/)
 - Quick Start (#quickstart)
 - CLI Reference (docs link)
 - Troubleshooting (docs link)
 
 ### Column 3: Community
 
-- GitHub (https://github.com/opsflow-sh/xopsbot)
+- GitHub (https://github.com/agenticdevops/xopsbot)
 - OpenClaw (https://github.com/openclaw)
 - opsflow.sh
 

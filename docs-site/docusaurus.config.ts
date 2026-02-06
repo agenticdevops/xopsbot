@@ -11,11 +11,11 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://opsflow-sh.github.io',
+  url: 'https://agenticops.github.io',
   baseUrl: '/xopsbot/',
   trailingSlash: false,
 
-  organizationName: 'opsflow-sh',
+  organizationName: 'agenticdevops',
   projectName: 'xopsbot',
 
   onBrokenLinks: 'throw',
@@ -33,7 +33,7 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           routeBasePath: '/',
           editUrl:
-            'https://github.com/opsflow-sh/xopsbot/tree/main/docs-site/',
+            'https://github.com/agenticdevops/xopsbot/tree/main/docs-site/',
         },
         blog: false,
         theme: {
@@ -64,7 +64,7 @@ const config: Config = {
           label: 'Developer Guide',
         },
         {
-          href: 'https://github.com/opsflow-sh/xopsbot',
+          href: 'https://github.com/agenticdevops/xopsbot',
           label: 'GitHub',
           position: 'right',
         },
@@ -91,12 +91,12 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/opsflow-sh/xopsbot',
+              href: 'https://github.com/agenticdevops/xopsbot',
             },
           ],
         },
       ],
-      copyright: `Copyright \u00a9 ${new Date().getFullYear()} opsflow-sh. Built with Docusaurus.`,
+      copyright: `Copyright \u00a9 ${new Date().getFullYear()} agenticdevops. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,

@@ -29,7 +29,7 @@ Before installing xops.bot, make sure you have:
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/opsflow-sh/xopsbot.git
+git clone https://github.com/agenticdevops/xopsbot.git
 cd xopsbot
 ```
 

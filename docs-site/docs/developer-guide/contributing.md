@@ -18,7 +18,7 @@ How to set up a development environment and contribute to xops.bot.
 ### Clone and Install
 
 ```bash
-git clone https://github.com/opsflow-sh/xopsbot.git
+git clone https://github.com/agenticdevops/xopsbot.git
 cd xopsbot
 bun install
 ```

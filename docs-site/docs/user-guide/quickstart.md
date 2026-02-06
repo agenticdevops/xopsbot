@@ -19,7 +19,7 @@ You need three things installed:
 ## Step 1: Install
 
 ```bash
-git clone https://github.com/opsflow-sh/xopsbot.git
+git clone https://github.com/agenticdevops/xopsbot.git
 cd xopsbot
 bun install
 ```
