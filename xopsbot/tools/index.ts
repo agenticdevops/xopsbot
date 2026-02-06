@@ -52,3 +52,10 @@ export const WORKSPACE_TOOLS: Record<string, string[]> = {
   'finops-agent': ['aws'],
   'platform-agent': ['terraform', 'ansible', 'aws'],
 };
+
+// TOOLS.md generator functions
+export {
+  generateToolSafetySection,
+  generateWorkspaceToolsMd,
+  stripGeneratedSections,
+} from './generate-tools-md';
