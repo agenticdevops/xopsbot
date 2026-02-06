@@ -22,12 +22,18 @@ const sidebars: SidebarsConfig = {
       ],
     },
     'user-guide/profiles',
+    'user-guide/safety-configuration',
+    'user-guide/skills',
+    'user-guide/tool-safety',
   ],
   devGuide: [
     'developer-guide/architecture',
     'developer-guide/wizard-architecture',
+    'developer-guide/safety-architecture',
     'developer-guide/adding-agents',
     'developer-guide/agent-personality',
+    'developer-guide/adding-skills',
+    'developer-guide/adding-tools',
     'developer-guide/contributing',
   ],
 };
