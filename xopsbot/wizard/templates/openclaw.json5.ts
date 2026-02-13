@@ -28,36 +28,66 @@ const TOOL_ENV_VARS: Record<string, Record<string, string>> = {
   ansible: { ANSIBLE_CONFIG: '~/.ansible.cfg' },
 };
 
+/** Prefix used for all xopsbot agent IDs */
+const XOPS_AGENT_PREFIX = 'xops-';
+
 /**
  * Generate an OpenClaw configuration from wizard results.
  *
- * Produces a JSON5 config string with:
- * - Agent list built from selected workspaces
- * - Channels section with placeholder tokens
- * - Tool-specific environment variables
- * - Selected provider model as default primary model
- * - Safety mode applied to tool deny lists
+ * When an existing config is provided, merges xopsbot agents into it
+ * instead of replacing the entire file. Existing non-xopsbot agents,
+ * channels, bindings, env vars, and unknown top-level keys are preserved.
+ *
+ * @param results - Wizard selections
+ * @param existingConfig - Parsed existing openclaw.json (if any)
+ * @returns JSON5 config string
  */
-export function generateOpenClawConfig(results: WizardResults): string {
+export function generateOpenClawConfig(
+  results: WizardResults,
+  existingConfig?: Record<string, unknown>
+): string {
   const { workspaces, channels, tools, safetyMode, provider } = results;
 
   // Cast safetyMode to SafetyMode type for safety module functions
   const mode = safetyMode as SafetyMode;
 
-  // Build agent list from workspaces
-  const agentList = workspaces.map((ws, index) => ({
-    id: `xops-${ws.replace('-agent', '')}`,
+  // Build xopsbot agent entries from workspaces
+  const xopsAgents = workspaces.map((ws) => ({
+    id: `${XOPS_AGENT_PREFIX}${ws.replace('-agent', '')}`,
     name: ws
       .split('-')
       .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
       .join(' '),
-    default: index === 0,
+    default: false, // Will be set below based on merge logic
     workspace: `~/.xopsbot/workspaces/${ws}`,
     tools: {
       profile: 'coding',
       deny: mode === 'safe' ? SAFE_MODE_TOOL_DENY : [],
     },
   }));
+
+  // Merge agent lists: preserve existing non-xopsbot agents
+  let mergedAgentList: Array<Record<string, unknown>>;
+  const existingAgents = (existingConfig?.agents as Record<string, unknown>)?.list;
+  if (Array.isArray(existingAgents)) {
+    const nonXopsAgents = existingAgents.filter(
+      (a: Record<string, unknown>) =>
+        typeof a.id === 'string' && !a.id.startsWith(XOPS_AGENT_PREFIX)
+    );
+    const hasExistingDefault = nonXopsAgents.some(
+      (a: Record<string, unknown>) => a.default === true
+    );
+    if (!hasExistingDefault && xopsAgents.length > 0) {
+      xopsAgents[0].default = true;
+    }
+    mergedAgentList = [...nonXopsAgents, ...xopsAgents];
+  } else {
+    // No existing agents -- first xopsbot agent is default
+    if (xopsAgents.length > 0) {
+      xopsAgents[0].default = true;
+    }
+    mergedAgentList = xopsAgents;
+  }
 
   // Build channels config with placeholder tokens
   const channelsConfig: Record<string, { enabled: boolean; token: string }> = {};
@@ -70,15 +100,41 @@ export function generateOpenClawConfig(results: WizardResults): string {
   }
 
   // Build env vars from tools
-  const env: Record<string, string> = {};
+  const newEnv: Record<string, string> = {};
   for (const tool of tools) {
     const toolEnv = TOOL_ENV_VARS[tool];
     if (toolEnv) {
-      Object.assign(env, toolEnv);
+      Object.assign(newEnv, toolEnv);
     }
   }
 
+  // Merge with existing config if present
+  const existingChannels =
+    existingConfig?.channels && typeof existingConfig.channels === 'object'
+      ? (existingConfig.channels as Record<string, unknown>)
+      : {};
+  const existingBindings = Array.isArray(existingConfig?.bindings)
+    ? existingConfig.bindings
+    : [];
+  const existingEnv =
+    existingConfig?.env && typeof existingConfig.env === 'object'
+      ? (existingConfig.env as Record<string, string>)
+      : {};
+
+  // Merge skills.load.extraDirs without duplicates
+  const existingSkills = existingConfig?.skills as Record<string, unknown> | undefined;
+  const existingLoad = existingSkills?.load as Record<string, unknown> | undefined;
+  const existingExtraDirs = Array.isArray(existingLoad?.extraDirs)
+    ? (existingLoad.extraDirs as string[])
+    : [];
+  const xopsSkillsDir = '~/.xopsbot/skills';
+  const mergedExtraDirs = existingExtraDirs.includes(xopsSkillsDir)
+    ? existingExtraDirs
+    : [...existingExtraDirs, xopsSkillsDir];
+
+  // Start from existing config to preserve unknown top-level keys
   const config: Record<string, unknown> = {
+    ...(existingConfig || {}),
     agents: {
       defaults: {
         model: { primary: provider.model },
@@ -87,19 +143,38 @@ export function generateOpenClawConfig(results: WizardResults): string {
           exec: safetyModeToExecConfig(mode),
         },
       },
-      list: agentList,
+      list: mergedAgentList,
     },
-    channels: channelsConfig,
-    bindings: [],
+    channels: { ...existingChannels, ...channelsConfig },
+    bindings: existingBindings,
     skills: {
       load: {
-        extraDirs: ['~/.xopsbot/skills'],
+        extraDirs: mergedExtraDirs,
         watch: true,
       },
     },
     logging: getAuditConfig(mode !== 'full'),
-    env,
+    env: { ...existingEnv, ...newEnv },
   };
 
   return JSON5.stringify(config, null, 2);
+}
+
+/**
+ * Count non-xopsbot agents preserved from an existing config.
+ */
+export function countPreservedAgents(
+  existingConfig: Record<string, unknown>
+): { count: number; names: string[] } {
+  const existingAgents = (existingConfig?.agents as Record<string, unknown>)?.list;
+  if (!Array.isArray(existingAgents)) return { count: 0, names: [] };
+
+  const preserved = existingAgents.filter(
+    (a: Record<string, unknown>) =>
+      typeof a.id === 'string' && !a.id.startsWith(XOPS_AGENT_PREFIX)
+  );
+  return {
+    count: preserved.length,
+    names: preserved.map((a: Record<string, unknown>) => String(a.id || a.name || 'unknown')),
+  };
 }

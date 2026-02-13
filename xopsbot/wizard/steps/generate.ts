@@ -2,7 +2,8 @@ import * as p from '@clack/prompts';
 import pc from 'picocolors';
 import * as fs from 'fs';
 import * as path from 'path';
-import { generateOpenClawConfig } from '../templates/openclaw.json5';
+import JSON5 from 'json5';
+import { generateOpenClawConfig, countPreservedAgents } from '../templates/openclaw.json5';
 import { generateExecApprovals } from '../../safety';
 import type { WizardResults } from '../types';
 import type { SafetyMode } from '../../schemas/profile.schema';
@@ -37,15 +38,27 @@ export async function generateConfig(results: WizardResults) {
       copyDirSync(src, dest);
     }
 
-    // 3. Generate OpenClaw config
-    const openclawConfig = generateOpenClawConfig(results);
+    // 3. Check for existing OpenClaw config and merge if present
+    const openclawConfigPath = path.join(OPENCLAW_HOME, 'openclaw.json');
+    let existingConfig: Record<string, unknown> | undefined;
+    let preservedAgents: { count: number; names: string[] } = { count: 0, names: [] };
+
+    if (fs.existsSync(openclawConfigPath)) {
+      try {
+        existingConfig = JSON5.parse(
+          fs.readFileSync(openclawConfigPath, 'utf-8')
+        ) as Record<string, unknown>;
+        preservedAgents = countPreservedAgents(existingConfig);
+      } catch {
+        // If the existing config is malformed, start fresh
+        existingConfig = undefined;
+      }
+    }
+
+    const openclawConfig = generateOpenClawConfig(results, existingConfig);
 
     // 4. Write openclaw.json
-    fs.writeFileSync(
-      path.join(OPENCLAW_HOME, 'openclaw.json'),
-      openclawConfig,
-      'utf-8'
-    );
+    fs.writeFileSync(openclawConfigPath, openclawConfig, 'utf-8');
 
     // 4b. Generate and write exec-approvals.json
     const agentIds = results.workspaces.map(
@@ -61,7 +74,11 @@ export async function generateConfig(results: WizardResults) {
       { mode: 0o600 } // Restrictive permissions -- security-sensitive file
     );
 
-    spinner.stop('Configuration generated!');
+    spinner.stop(
+      existingConfig
+        ? 'Configuration merged with existing openclaw.json!'
+        : 'Configuration generated!'
+    );
 
     // 5. Build summary
     const channelList =
@@ -88,8 +105,15 @@ export async function generateConfig(results: WizardResults) {
       `Tools:      ${pc.cyan(results.tools.join(', '))}`,
       `Safety:     ${pc.cyan(results.safetyMode)} - ${safetyExplanation[results.safetyMode]}`,
       `Provider:   ${pc.cyan(results.provider.model)}`,
+      // Show preserved agents if merging with existing config
+      ...(preservedAgents.count > 0
+        ? [
+            '',
+            `${pc.green(`Preserved ${preservedAgents.count} existing agent(s):`)} ${pc.cyan(preservedAgents.names.join(', '))}`,
+          ]
+        : []),
       '',
-      'Files created:',
+      existingConfig ? 'Files updated:' : 'Files created:',
       `  ${pc.dim('~/.openclaw/openclaw.json')}`,
       `  ${pc.dim('~/.openclaw/exec-approvals.json')}`,
       `  ${pc.dim('~/.xopsbot/workspaces/*')}`,

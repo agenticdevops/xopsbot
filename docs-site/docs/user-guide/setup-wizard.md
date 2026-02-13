@@ -205,13 +205,21 @@ You can re-run the wizard at any time to change your configuration:
 bun run wizard
 ```
 
-Alternatively, delete the config file to trigger first-run detection:
+When an existing `~/.openclaw/openclaw.json` is detected, the wizard **merges** with it instead of replacing it:
+
+- **Existing non-xopsbot agents are preserved.** If you have a default orchestrator agent (e.g., Tara), it remains in the config with its `default: true` flag intact.
+- **xopsbot agents are replaced** with your new wizard selections (no duplicates).
+- **Existing channels, bindings, and environment variables are preserved.** New wizard selections are added alongside them.
+- **Unknown top-level config keys are preserved.**
+
+The wizard summary will show how many existing agents were preserved.
+
+To start completely fresh instead of merging, delete the config file first:
 
 ```bash
 rm ~/.openclaw/openclaw.json
+bun run wizard
 ```
-
-Existing workspace files and configuration will be overwritten with the new selections.
 
 ## Cancellation
 
